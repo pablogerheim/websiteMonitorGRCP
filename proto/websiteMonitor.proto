@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option go_package = "./pb"; 
+
+import "google/protobuf/timestamp.proto";
+
+package websiteMonitor;
+
+service WebsiteMonitorService {
+    rpc AutoMigrate(EmptyRequest) returns (ResponseMessage);
+    rpc ExibeTodosSites(EmptyRequest) returns (SitesResponse);
+    rpc CriaNovoSite(SiteRequest) returns (SiteResponse);
+    rpc DeletaSite(IdRequest) returns (ResponseMessage);
+    rpc EditaSite(SiteEditRequest) returns (SiteResponse);
+    rpc IniciarRotina(EmptyRequest) returns (ResponseMessage);
+    rpc PararRotina(EmptyRequest) returns (ResponseMessage);
+}
+
+message EmptyRequest {}
+
+message ResponseMessage {
+    string message = 1;
+}
+
+message IdRequest {
+    int32 id = 1;
+}
+
+message SiteRequest {
+    string name = 1;
+}
+
+message SiteEditRequest {
+    int32 id = 1;
+    string name = 2;
+}
+
+message SiteResponse {
+    int32 id = 1;
+    string name = 2;
+    google.protobuf.Timestamp dateCreate = 3;
+    google.protobuf.Timestamp dateUpdate = 4;
+    google.protobuf.Timestamp dateDelete = 5;
+}
+
+message SitesResponse {
+    repeated SiteResponse sites = 1;
+}
