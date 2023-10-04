@@ -138,7 +138,7 @@ func (s *Server) AutoMigrate(ctx context.Context, in *pb.EmptyRequest) (*pb.Resp
 	fmt.Println(s.handler)
 	fmt.Println(s.handler.Site)
 
-	if err := s.handler.Site.AutoMigrate().Error; err != nil {
+	if err := s.handler.Site.AutoMigrate(); err != nil {
 		return nil, status.Errorf(codes.Internal, "Erro ao criar modelo")
 	}
 
