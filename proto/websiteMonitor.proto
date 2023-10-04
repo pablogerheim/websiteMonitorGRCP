@@ -8,12 +8,13 @@ package websiteMonitor;
 
 service WebsiteMonitorService {
     rpc AutoMigrate(EmptyRequest) returns (ResponseMessage);
-    rpc ExibeTodosSites(EmptyRequest) returns (SitesResponse);
-    rpc CriaNovoSite(SiteRequest) returns (SiteResponse);
-    rpc DeletaSite(IdRequest) returns (ResponseMessage);
-    rpc EditaSite(SiteEditRequest) returns (SiteResponse);
+    rpc GetAllSites(EmptyRequest) returns (SitesResponse);
+    rpc CreateSite(SiteRequest) returns (SiteResponse);
+    rpc DeleteSite(IdRequest) returns (ResponseMessage);
+    rpc UpdateSite(SiteEditRequest) returns (SiteResponse);
     rpc IniciarRotina(EmptyRequest) returns (ResponseMessage);
     rpc PararRotina(EmptyRequest) returns (ResponseMessage);
+    rpc GetSite(IdRequest) returns (SiteResponse);
 }
 
 message EmptyRequest {}

@@ -19,13 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	WebsiteMonitorService_AutoMigrate_FullMethodName     = "/websiteMonitor.WebsiteMonitorService/AutoMigrate"
-	WebsiteMonitorService_ExibeTodosSites_FullMethodName = "/websiteMonitor.WebsiteMonitorService/ExibeTodosSites"
-	WebsiteMonitorService_CriaNovoSite_FullMethodName    = "/websiteMonitor.WebsiteMonitorService/CriaNovoSite"
-	WebsiteMonitorService_DeletaSite_FullMethodName      = "/websiteMonitor.WebsiteMonitorService/DeletaSite"
-	WebsiteMonitorService_EditaSite_FullMethodName       = "/websiteMonitor.WebsiteMonitorService/EditaSite"
-	WebsiteMonitorService_IniciarRotina_FullMethodName   = "/websiteMonitor.WebsiteMonitorService/IniciarRotina"
-	WebsiteMonitorService_PararRotina_FullMethodName     = "/websiteMonitor.WebsiteMonitorService/PararRotina"
+	WebsiteMonitorService_AutoMigrate_FullMethodName   = "/websiteMonitor.WebsiteMonitorService/AutoMigrate"
+	WebsiteMonitorService_GetAllSites_FullMethodName   = "/websiteMonitor.WebsiteMonitorService/GetAllSites"
+	WebsiteMonitorService_CreateSite_FullMethodName    = "/websiteMonitor.WebsiteMonitorService/CreateSite"
+	WebsiteMonitorService_DeleteSite_FullMethodName    = "/websiteMonitor.WebsiteMonitorService/DeleteSite"
+	WebsiteMonitorService_UpdateSite_FullMethodName    = "/websiteMonitor.WebsiteMonitorService/UpdateSite"
+	WebsiteMonitorService_IniciarRotina_FullMethodName = "/websiteMonitor.WebsiteMonitorService/IniciarRotina"
+	WebsiteMonitorService_PararRotina_FullMethodName   = "/websiteMonitor.WebsiteMonitorService/PararRotina"
+	WebsiteMonitorService_GetSite_FullMethodName       = "/websiteMonitor.WebsiteMonitorService/GetSite"
 )
 
 // WebsiteMonitorServiceClient is the client API for WebsiteMonitorService service.
@@ -33,12 +34,13 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WebsiteMonitorServiceClient interface {
 	AutoMigrate(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ResponseMessage, error)
-	ExibeTodosSites(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*SitesResponse, error)
-	CriaNovoSite(ctx context.Context, in *SiteRequest, opts ...grpc.CallOption) (*SiteResponse, error)
-	DeletaSite(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ResponseMessage, error)
-	EditaSite(ctx context.Context, in *SiteEditRequest, opts ...grpc.CallOption) (*SiteResponse, error)
+	GetAllSites(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*SitesResponse, error)
+	CreateSite(ctx context.Context, in *SiteRequest, opts ...grpc.CallOption) (*SiteResponse, error)
+	DeleteSite(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ResponseMessage, error)
+	UpdateSite(ctx context.Context, in *SiteEditRequest, opts ...grpc.CallOption) (*SiteResponse, error)
 	IniciarRotina(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ResponseMessage, error)
 	PararRotina(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ResponseMessage, error)
+	GetSite(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*SiteResponse, error)
 }
 
 type websiteMonitorServiceClient struct {
@@ -58,36 +60,36 @@ func (c *websiteMonitorServiceClient) AutoMigrate(ctx context.Context, in *Empty
 	return out, nil
 }
 
-func (c *websiteMonitorServiceClient) ExibeTodosSites(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*SitesResponse, error) {
+func (c *websiteMonitorServiceClient) GetAllSites(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*SitesResponse, error) {
 	out := new(SitesResponse)
-	err := c.cc.Invoke(ctx, WebsiteMonitorService_ExibeTodosSites_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WebsiteMonitorService_GetAllSites_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *websiteMonitorServiceClient) CriaNovoSite(ctx context.Context, in *SiteRequest, opts ...grpc.CallOption) (*SiteResponse, error) {
+func (c *websiteMonitorServiceClient) CreateSite(ctx context.Context, in *SiteRequest, opts ...grpc.CallOption) (*SiteResponse, error) {
 	out := new(SiteResponse)
-	err := c.cc.Invoke(ctx, WebsiteMonitorService_CriaNovoSite_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WebsiteMonitorService_CreateSite_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *websiteMonitorServiceClient) DeletaSite(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ResponseMessage, error) {
+func (c *websiteMonitorServiceClient) DeleteSite(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ResponseMessage, error) {
 	out := new(ResponseMessage)
-	err := c.cc.Invoke(ctx, WebsiteMonitorService_DeletaSite_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WebsiteMonitorService_DeleteSite_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *websiteMonitorServiceClient) EditaSite(ctx context.Context, in *SiteEditRequest, opts ...grpc.CallOption) (*SiteResponse, error) {
+func (c *websiteMonitorServiceClient) UpdateSite(ctx context.Context, in *SiteEditRequest, opts ...grpc.CallOption) (*SiteResponse, error) {
 	out := new(SiteResponse)
-	err := c.cc.Invoke(ctx, WebsiteMonitorService_EditaSite_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WebsiteMonitorService_UpdateSite_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,17 +114,27 @@ func (c *websiteMonitorServiceClient) PararRotina(ctx context.Context, in *Empty
 	return out, nil
 }
 
+func (c *websiteMonitorServiceClient) GetSite(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*SiteResponse, error) {
+	out := new(SiteResponse)
+	err := c.cc.Invoke(ctx, WebsiteMonitorService_GetSite_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WebsiteMonitorServiceServer is the server API for WebsiteMonitorService service.
 // All implementations must embed UnimplementedWebsiteMonitorServiceServer
 // for forward compatibility
 type WebsiteMonitorServiceServer interface {
 	AutoMigrate(context.Context, *EmptyRequest) (*ResponseMessage, error)
-	ExibeTodosSites(context.Context, *EmptyRequest) (*SitesResponse, error)
-	CriaNovoSite(context.Context, *SiteRequest) (*SiteResponse, error)
-	DeletaSite(context.Context, *IdRequest) (*ResponseMessage, error)
-	EditaSite(context.Context, *SiteEditRequest) (*SiteResponse, error)
+	GetAllSites(context.Context, *EmptyRequest) (*SitesResponse, error)
+	CreateSite(context.Context, *SiteRequest) (*SiteResponse, error)
+	DeleteSite(context.Context, *IdRequest) (*ResponseMessage, error)
+	UpdateSite(context.Context, *SiteEditRequest) (*SiteResponse, error)
 	IniciarRotina(context.Context, *EmptyRequest) (*ResponseMessage, error)
 	PararRotina(context.Context, *EmptyRequest) (*ResponseMessage, error)
+	GetSite(context.Context, *IdRequest) (*SiteResponse, error)
 	mustEmbedUnimplementedWebsiteMonitorServiceServer()
 }
 
@@ -133,23 +145,26 @@ type UnimplementedWebsiteMonitorServiceServer struct {
 func (UnimplementedWebsiteMonitorServiceServer) AutoMigrate(context.Context, *EmptyRequest) (*ResponseMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutoMigrate not implemented")
 }
-func (UnimplementedWebsiteMonitorServiceServer) ExibeTodosSites(context.Context, *EmptyRequest) (*SitesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExibeTodosSites not implemented")
+func (UnimplementedWebsiteMonitorServiceServer) GetAllSites(context.Context, *EmptyRequest) (*SitesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllSites not implemented")
 }
-func (UnimplementedWebsiteMonitorServiceServer) CriaNovoSite(context.Context, *SiteRequest) (*SiteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CriaNovoSite not implemented")
+func (UnimplementedWebsiteMonitorServiceServer) CreateSite(context.Context, *SiteRequest) (*SiteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSite not implemented")
 }
-func (UnimplementedWebsiteMonitorServiceServer) DeletaSite(context.Context, *IdRequest) (*ResponseMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeletaSite not implemented")
+func (UnimplementedWebsiteMonitorServiceServer) DeleteSite(context.Context, *IdRequest) (*ResponseMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSite not implemented")
 }
-func (UnimplementedWebsiteMonitorServiceServer) EditaSite(context.Context, *SiteEditRequest) (*SiteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EditaSite not implemented")
+func (UnimplementedWebsiteMonitorServiceServer) UpdateSite(context.Context, *SiteEditRequest) (*SiteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSite not implemented")
 }
 func (UnimplementedWebsiteMonitorServiceServer) IniciarRotina(context.Context, *EmptyRequest) (*ResponseMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IniciarRotina not implemented")
 }
 func (UnimplementedWebsiteMonitorServiceServer) PararRotina(context.Context, *EmptyRequest) (*ResponseMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PararRotina not implemented")
+}
+func (UnimplementedWebsiteMonitorServiceServer) GetSite(context.Context, *IdRequest) (*SiteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSite not implemented")
 }
 func (UnimplementedWebsiteMonitorServiceServer) mustEmbedUnimplementedWebsiteMonitorServiceServer() {}
 
@@ -182,74 +197,74 @@ func _WebsiteMonitorService_AutoMigrate_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebsiteMonitorService_ExibeTodosSites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebsiteMonitorService_GetAllSites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebsiteMonitorServiceServer).ExibeTodosSites(ctx, in)
+		return srv.(WebsiteMonitorServiceServer).GetAllSites(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebsiteMonitorService_ExibeTodosSites_FullMethodName,
+		FullMethod: WebsiteMonitorService_GetAllSites_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebsiteMonitorServiceServer).ExibeTodosSites(ctx, req.(*EmptyRequest))
+		return srv.(WebsiteMonitorServiceServer).GetAllSites(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebsiteMonitorService_CriaNovoSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebsiteMonitorService_CreateSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SiteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebsiteMonitorServiceServer).CriaNovoSite(ctx, in)
+		return srv.(WebsiteMonitorServiceServer).CreateSite(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebsiteMonitorService_CriaNovoSite_FullMethodName,
+		FullMethod: WebsiteMonitorService_CreateSite_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebsiteMonitorServiceServer).CriaNovoSite(ctx, req.(*SiteRequest))
+		return srv.(WebsiteMonitorServiceServer).CreateSite(ctx, req.(*SiteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebsiteMonitorService_DeletaSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebsiteMonitorService_DeleteSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(IdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebsiteMonitorServiceServer).DeletaSite(ctx, in)
+		return srv.(WebsiteMonitorServiceServer).DeleteSite(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebsiteMonitorService_DeletaSite_FullMethodName,
+		FullMethod: WebsiteMonitorService_DeleteSite_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebsiteMonitorServiceServer).DeletaSite(ctx, req.(*IdRequest))
+		return srv.(WebsiteMonitorServiceServer).DeleteSite(ctx, req.(*IdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebsiteMonitorService_EditaSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebsiteMonitorService_UpdateSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SiteEditRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebsiteMonitorServiceServer).EditaSite(ctx, in)
+		return srv.(WebsiteMonitorServiceServer).UpdateSite(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebsiteMonitorService_EditaSite_FullMethodName,
+		FullMethod: WebsiteMonitorService_UpdateSite_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebsiteMonitorServiceServer).EditaSite(ctx, req.(*SiteEditRequest))
+		return srv.(WebsiteMonitorServiceServer).UpdateSite(ctx, req.(*SiteEditRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,6 +305,24 @@ func _WebsiteMonitorService_PararRotina_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WebsiteMonitorService_GetSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebsiteMonitorServiceServer).GetSite(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebsiteMonitorService_GetSite_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebsiteMonitorServiceServer).GetSite(ctx, req.(*IdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WebsiteMonitorService_ServiceDesc is the grpc.ServiceDesc for WebsiteMonitorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -302,20 +335,20 @@ var WebsiteMonitorService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WebsiteMonitorService_AutoMigrate_Handler,
 		},
 		{
-			MethodName: "ExibeTodosSites",
-			Handler:    _WebsiteMonitorService_ExibeTodosSites_Handler,
+			MethodName: "GetAllSites",
+			Handler:    _WebsiteMonitorService_GetAllSites_Handler,
 		},
 		{
-			MethodName: "CriaNovoSite",
-			Handler:    _WebsiteMonitorService_CriaNovoSite_Handler,
+			MethodName: "CreateSite",
+			Handler:    _WebsiteMonitorService_CreateSite_Handler,
 		},
 		{
-			MethodName: "DeletaSite",
-			Handler:    _WebsiteMonitorService_DeletaSite_Handler,
+			MethodName: "DeleteSite",
+			Handler:    _WebsiteMonitorService_DeleteSite_Handler,
 		},
 		{
-			MethodName: "EditaSite",
-			Handler:    _WebsiteMonitorService_EditaSite_Handler,
+			MethodName: "UpdateSite",
+			Handler:    _WebsiteMonitorService_UpdateSite_Handler,
 		},
 		{
 			MethodName: "IniciarRotina",
@@ -324,6 +357,10 @@ var WebsiteMonitorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PararRotina",
 			Handler:    _WebsiteMonitorService_PararRotina_Handler,
+		},
+		{
+			MethodName: "GetSite",
+			Handler:    _WebsiteMonitorService_GetSite_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
